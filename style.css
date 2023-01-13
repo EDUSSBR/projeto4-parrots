@@ -14,16 +14,19 @@ h1 {
 	margin-bottom: 47px;
 	width: 100%;
 }
-body{
+
+body {
 	background-color: #EEF9BF;
 	padding: 0 11px;
 }
-img{
+
+img {
 	/* display: block; */
 	width: 100px;
 	height: 100px;
 }
-.card{
+
+.card {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -33,16 +36,35 @@ img{
 	border-radius: 5px;
 	border: 1px solid #99CEA8;
 	margin-bottom: 34px;
+	transition: all 0.5s;
+	transform-style: preserve-3d;
+
 }
-main{
+
+main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
+
+
+
 .hidden {
 	display: none;
 	position: absolute;
 }
+
+.face {
+	transform: rotateY(0deg);
+}
+
+ .back{
+	transform: rotateY(-180deg);
+}
+.front{
+	transform: rotateY(180deg);
+} 
+
 
 @media (min-width: 335px) {
 	h1 {
@@ -54,17 +76,19 @@ main{
 		letter-spacing: -0.004em;
 		margin-bottom: 13px;
 	}
-	main{
+
+	main {
 		flex-direction: row;
 		margin: 0 auto;
 		flex-wrap: wrap;
 		justify-content: center;
 		max-width: 872px;
 	}
-	.card{
+
+	.card {
 		margin-right: 34px;
 		margin-top: 34px;
 		margin-bottom: 0px;
-		
+
 	}
 }
