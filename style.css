@@ -3,7 +3,7 @@
 }
 
 h1 {
-	font-family: 'Roboto';
+	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
 	font-size: 36px;
 	line-height: 42px;
@@ -45,6 +45,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin: 0 auto;
 }
 
 
@@ -58,17 +59,25 @@ main {
 	transform: rotateY(0deg);
 }
 
- .back{
+.back {
 	transform: rotateY(-180deg);
 }
-.front{
+
+.front {
 	transform: rotateY(180deg);
-} 
+}
 
 .counter {
-	padding: 15px 15px 0 0 ;
+	padding: 15px 15px 0 0;
 	text-align: right;
+	color: #75B79E;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 36px;
+	line-height: 42px;
+	letter-spacing: -0.004em;
 }
+
 @media (min-width: 335px) {
 	h1 {
 		font-family: 'Roboto';
@@ -89,7 +98,8 @@ main {
 	}
 
 	.card {
-		margin-right: 34px;
+		margin-right: 17px;
+		margin-left: 17px;
 		margin-top: 34px;
 		margin-bottom: 0px;
 

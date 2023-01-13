@@ -126,10 +126,15 @@ let model = {
         this.counter += 1;
         document.querySelector('.counter').innerHTML = this.counter
     },
+    resetGame: function resetGame(){
+        document.querySelector('main').innerHTML=""
+        document.querySelector('.counter').innerHTML="0"
+        this.setupGame()
+    }
 }
 let controller = Object.assign(Object.create(view), model);
 controller.setupGame();
-setInterval(()=>controller.updateCounter(), 1000)
+let interval = setInterval(()=>controller.updateCounter(), 1000)
 
 
 function turnCard(card) {
@@ -163,6 +168,17 @@ function turnCard(card) {
             console.log("voce venceu");
             setTimeout(() => {
             alert(`Você ganhou em ${controller.playedCounter} jogadas! A duração do jogo foi de ${controller.counter} segundos!`);
+            let resetAnswer='hehe';
+            while (resetAnswer!=='sim' && resetAnswer!=='não'){
+                console.log("answer:",resetAnswer)
+                resetAnswer = prompt(`Você gostaria de jogar novamente? (sim/não)`);
+            }
+            if (resetAnswer=="não"){
+                clearInterval(interval)
+                return;
+            } else if (resetAnswer=="sim"){
+                controller.resetGame()        
+            }
         }, 500);
         }
         if (controller.selectedCards.length == 2){
