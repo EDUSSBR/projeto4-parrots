@@ -5,12 +5,12 @@ let view = {
     },
     addNewCard: function addNewCard(id) {
         document.querySelector('main').innerHTML += `
-        <div id=${id}>   
+        <div data-test="card" id=${id}>   
         <div onclick="turnCard(this);" class="card face">
-            <img src="./imgs/back.png" alt="card">
+            <img data-test="face-down-image" src="./imgs/back.png" alt="card">
         </div> 
         <div onclick="turnCard(this);" class="card face hidden">
-            <img src="./imgs/${this.imgSRC[id]}.gif" alt="card">
+            <img data-test="face-up-image" src="./imgs/${this.imgSRC[id]}.gif" alt="card">
         </div> 
         </div>   
         `
@@ -29,7 +29,9 @@ let view = {
     },
     getCard: function getCard(id) {
         return document.querySelector(`#${id}`)
-    }
+    },
+
+    
 }
 
 
@@ -39,6 +41,7 @@ let model = {
         this.numberOfCards;
         this.cardsID = [];
         this.playedCounter = 0;
+        this.counter = 0;
         this.selectedCards = [];
         this.cardPairsFound = [];
         do {
@@ -115,23 +118,30 @@ let model = {
     getAllFoundCards: function getAllFoundCards(){
         return this.cardPairsFound.length >= this.numberOfCards
     },
+
     updatePlayedCounter: function updatePlayedCounter(){
         this.playedCounter += 1;
-    }
+    },
+    updateCounter: function updateCounter(){
+        this.counter += 1;
+        document.querySelector('.counter').innerHTML = this.counter
+    },
 }
 let controller = Object.assign(Object.create(view), model);
 controller.setupGame();
+setInterval(()=>controller.updateCounter(), 1000)
+
 
 function turnCard(card) {
-    if (card.parentNode.classList.contains('found')){
+    if (card.parentNode.classList.contains('found') || controller.selectedCards.length === 2 || controller.checkAlreadySelected(card)){
         return;
     }
-    if (controller.selectedCards.length === 2) {
-        return;
-    }
-    if (controller.checkAlreadySelected(card)) {
-        return;
-    }
+    // if (controller.selectedCards.length === 2) {
+    //     return;
+    // }
+    // if (controller.checkAlreadySelected(card)) {
+    //     return;
+    // }
     controller.setCardToSelected(card.parentNode);
     card.parentNode.querySelectorAll('div').forEach(el => {
         el.classList.toggle('face');
@@ -142,22 +152,24 @@ function turnCard(card) {
         }, (250));
 
     })
+    controller.updatePlayedCounter()
 
     if (controller.selectedCards.length === 2) {
-        controller.updatePlayedCounter()
         if (controller.checkEqualls()){
             controller.setPairAsFound();
-            // card.parentNode.querySelectorAll.forEach(item=> item.removeEventListener('onclick'))
+            controller.clearSelectedCards();
         }
         if (controller.getAllFoundCards()){
             console.log("voce venceu");
             setTimeout(() => {
-            alert(`Você ganhou em ${controller.playedCounter*2} jogadas!`);
+            alert(`Você ganhou em ${controller.playedCounter} jogadas! A duração do jogo foi de ${controller.counter} segundos!`);
         }, 500);
         }
-        setTimeout(() => {
-            controller.clearSelectedCards();
-        }, 1000);
+        if (controller.selectedCards.length == 2){
+            setTimeout(() => {
+                controller.clearSelectedCards();
+            }, 1000);
+        }
     }
 
 }
