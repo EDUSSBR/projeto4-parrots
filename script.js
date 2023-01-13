@@ -16,19 +16,19 @@ let view = {
         `
     },
     getAllCards: function getAllCards() {
-        this.cards = document.querySelectorAll('.card')
-        return this
+        this.cards = document.querySelectorAll('.card');
+        return this;
     },
     getAllSelectedCards: function getAllCards() {
-        this.selectedCards = document.querySelectorAll('main > div.selected')
+        this.selectedCards = document.querySelectorAll('main > div.selected');
     },
     setNewCards: function setNewCards(cardsToChange) {
-        let container = document.querySelector('#container')
-        container.setInnerHtml("")
-        container += this.addNewCard()
+        let container = document.querySelector('#container');
+        container.setInnerHtml("");
+        container += this.addNewCard();
     },
     getCard: function getCard(id) {
-        return document.querySelector(`#${id}`)
+        return document.querySelector(`#${id}`);
     },
 
     
@@ -74,7 +74,6 @@ let model = {
     },
     checkEqualls: function checkEqualls() {
         return this.selectedCards[0].id === this.selectedCards[1].id;
-        // this.selectedCards[0].id === this.selectedCards[1].id ? true: false
     },
     setCardToSelected: function setCardToSelected(card) {
 
@@ -141,12 +140,6 @@ function turnCard(card) {
     if (card.parentNode.classList.contains('found') || controller.selectedCards.length === 2 || controller.checkAlreadySelected(card)){
         return;
     }
-    // if (controller.selectedCards.length === 2) {
-    //     return;
-    // }
-    // if (controller.checkAlreadySelected(card)) {
-    //     return;
-    // }
     controller.setCardToSelected(card.parentNode);
     card.parentNode.querySelectorAll('div').forEach(el => {
         el.classList.toggle('face');
@@ -158,20 +151,18 @@ function turnCard(card) {
 
     })
     controller.updatePlayedCounter()
-
     if (controller.selectedCards.length === 2) {
         if (controller.checkEqualls()){
             controller.setPairAsFound();
             controller.clearSelectedCards();
         }
         if (controller.getAllFoundCards()){
-            console.log("voce venceu");
             setTimeout(() => {
             alert(`Você ganhou em ${controller.playedCounter} jogadas! A duração do jogo foi de ${controller.counter} segundos!`);
             let resetAnswer='hehe';
             while (resetAnswer!=='sim' && resetAnswer!=='não'){
                 console.log("answer:",resetAnswer)
-                resetAnswer = prompt(`Você gostaria de jogar novamente? (sim/não)`);
+                resetAnswer = prompt(`Você gostaria de jogar novamente? (sim/não)`).trim();
             }
             if (resetAnswer=="não"){
                 clearInterval(interval)
