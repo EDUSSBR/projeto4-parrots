@@ -82,12 +82,6 @@ let model = {
     removeCardFromSelected: function removeCardFromSelected(card) {
         card.classList.remove('selected');
     },
-
-    isCardSelectedEquall() {
-        this.playedCounter += 1;
-        this.selectedCards[0] === this.selectedCards[1] ? true : false;
-        return;
-    },
     getSelectedCards: function getSelectedCards() {
         return this.selectedCards;
     },
@@ -117,12 +111,21 @@ let model = {
         this.removeCardFromSelected(this.selectedCards[1]);
         this.cardPairsFound = [...this.cardPairsFound, ...this.selectedCards];
         this.selectedCards=[];
+    },
+    getAllFoundCards: function getAllFoundCards(){
+        return this.cardPairsFound.length >= this.numberOfCards
+    },
+    updatePlayedCounter: function updatePlayedCounter(){
+        this.playedCounter += 1;
     }
 }
 let controller = Object.assign(Object.create(view), model);
 controller.setupGame();
 
 function turnCard(card) {
+    if (card.parentNode.classList.contains('found')){
+        return;
+    }
     if (controller.selectedCards.length === 2) {
         return;
     }
@@ -141,8 +144,16 @@ function turnCard(card) {
     })
 
     if (controller.selectedCards.length === 2) {
+        controller.updatePlayedCounter()
         if (controller.checkEqualls()){
             controller.setPairAsFound();
+            // card.parentNode.querySelectorAll.forEach(item=> item.removeEventListener('onclick'))
+        }
+        if (controller.getAllFoundCards()){
+            console.log("voce venceu");
+            setTimeout(() => {
+            alert(`Você ganhou em ${controller.playedCounter*2} jogadas!`);
+        }, 500);
         }
         setTimeout(() => {
             controller.clearSelectedCards();
